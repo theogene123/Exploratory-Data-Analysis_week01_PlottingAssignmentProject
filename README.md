@@ -98,7 +98,50 @@ which returns `142.5 Mb`.
 > 2007-02-02. One alternative is to read the data from just those dates
 > rather than reading in the entire dataset and subsetting to those
 > dates.
-> 
+
+While this R commands requires to load the whole data file and then filter a subset
+
+```shell
+fulldata <- read.table("<path-your-data>/household_power_consumption.txt", sep=";")
+data     <- fulldata[fulldata$Date >= "01/02/2007" & fulldata$Date <= "02/02/2007", ]
+```
+
+You can subset the data right from the command line
+
+```shell
+$ head -n1 household_power_consumption.txt  > subset_household_power_consumption.txt 
+$
+$ head subset_household_power_consumption.txt 
+Date;Time;Global_active_power;Global_reactive_power;Voltage;Global_intensity;Sub_metering_1;Sub_metering_2;Sub_metering_3
+$
+$ egrep -i "(^1/2/2007)|(^2/2/2007)" household_power_consumption.txt  >> subset_household_power_consumption.txt
+$
+$ head subset_household_power_consumption.txt 
+Date;Time;Global_active_power;Global_reactive_power;Voltage;Global_intensity;Sub_metering_1;Sub_metering_2;Sub_metering_3
+1/2/2007;00:00:00;0.326;0.128;243.150;1.400;0.000;0.000;0.000
+1/2/2007;00:01:00;0.326;0.130;243.320;1.400;0.000;0.000;0.000
+1/2/2007;00:02:00;0.324;0.132;243.510;1.400;0.000;0.000;0.000
+1/2/2007;00:03:00;0.324;0.134;243.900;1.400;0.000;0.000;0.000
+1/2/2007;00:04:00;0.322;0.130;243.160;1.400;0.000;0.000;0.000
+1/2/2007;00:05:00;0.320;0.126;242.290;1.400;0.000;0.000;0.000
+1/2/2007;00:06:00;0.320;0.126;242.460;1.400;0.000;0.000;0.000
+1/2/2007;00:07:00;0.320;0.126;242.630;1.400;0.000;0.000;0.000
+1/2/2007;00:08:00;0.320;0.128;242.700;1.400;0.000;0.000;0.000
+$
+patechoc@Jarvis:data$ tail subset_household_power_consumption.txt 
+2/2/2007;23:50:00;3.624;0.104;241.110;15.000;0.000;0.000;18.000
+2/2/2007;23:51:00;3.628;0.104;241.260;15.000;0.000;0.000;18.000
+2/2/2007;23:52:00;3.626;0.104;241.070;15.000;0.000;0.000;18.000
+2/2/2007;23:53:00;3.700;0.208;240.720;15.400;0.000;0.000;18.000
+2/2/2007;23:54:00;3.696;0.226;240.710;15.200;0.000;1.000;17.000
+2/2/2007;23:55:00;3.696;0.226;240.900;15.200;0.000;1.000;18.000
+2/2/2007;23:56:00;3.698;0.226;241.020;15.200;0.000;2.000;18.000
+2/2/2007;23:57:00;3.684;0.224;240.480;15.200;0.000;1.000;18.000
+2/2/2007;23:58:00;3.658;0.220;239.610;15.200;0.000;1.000;17.000
+2/2/2007;23:59:00;3.680;0.224;240.370;15.200;0.000;2.000;18.000
+$ 
+```
+ 
 > * You may find it useful to convert the Date and Time variables to
 > Date/Time classes in R using the `strptime()` and `as.Date()`
 > functions.
