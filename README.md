@@ -1,6 +1,6 @@
 # Peer Graded Assignment: Exploratory Data Analysis Course Project (week 1)
 
-This assignment is the final project of the course on COURSERA named ["Exploratory Data Analysis"](https://www.coursera.org/learn/exploratory-data-analysis)
+This assignment is the first project assignment for the course on COURSERA named ["Exploratory Data Analysis"](https://www.coursera.org/learn/exploratory-data-analysis)
 
 ## COURSERA instructions
 
@@ -53,6 +53,46 @@ This assignment is the final project of the course on COURSERA named ["Explorato
 > calculate a rough estimate of how much memory the dataset will require
 > in memory before reading into R. Make sure your computer has enough
 > memory (most modern computers should be fine).
+
+You can look at the file properties and get its size on the disk:
+
+```shell
+$ ls -lh household_power_consumption.txt 
+-rw-rw-r-- 1 patechoc patechoc 127M Oct 12  2012 household_power_consumption.txt
+```
+
+Check the number of rows and columns also from the comand line
+```shell
+$ wc -l household_power_consumption.txt
+2075260 household_power_consumption.txt
+$
+# $ head household_power_consumption.txt 
+# Date;Time;Global_active_power;Global_reactive_power;Voltage;Global_intensity;Sub_metering_1;Sub_metering_2;Sub_metering_3
+# 16/12/2006;17:24:00;4.216;0.418;234.840;18.400;0.000;1.000;17.000
+# 16/12/2006;17:25:00;5.360;0.436;233.630;23.000;0.000;1.000;16.000
+# 16/12/2006;17:26:00;5.374;0.498;233.290;23.000;0.000;2.000;17.000
+# 16/12/2006;17:27:00;5.388;0.502;233.740;23.000;0.000;1.000;17.000
+# 16/12/2006;17:28:00;3.666;0.528;235.680;15.800;0.000;1.000;17.000
+# 16/12/2006;17:29:00;3.520;0.522;235.020;15.000;0.000;2.000;17.000
+# 16/12/2006;17:30:00;3.702;0.520;235.090;15.800;0.000;1.000;17.000
+# 16/12/2006;17:31:00;3.700;0.520;235.220;15.800;0.000;1.000;17.000
+# 16/12/2006;17:32:00;3.668;0.510;233.990;15.800;0.000;1.000;17.000
+```
+
+Finally with those numbers, you can calculate more precisely the size the data will take in memory
+
+```R
+m <- matrix(1,nrow=2075259,ncol=9)
+m <- as.data.frame(m)
+m[,1] <- sapply(m[,1],as.character.Date)
+m[,2:9] <- sapply(m[,1],as.factor)
+object.size(m)
+print(object.size(m),units="Mb")
+```
+
+which returns `142.5 Mb`.
+
+
 > 
 > * We will only be using data from the dates 2007-02-01 and
 > 2007-02-02. One alternative is to read the data from just those dates
