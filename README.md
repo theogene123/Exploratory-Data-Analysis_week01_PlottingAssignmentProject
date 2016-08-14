@@ -118,14 +118,14 @@ which returns `142.5 Mb`.
 > rather than reading in the entire dataset and subsetting to those
 > dates.
 
-While this R commands requires to load the whole data file and then filter a subset
+While the R commands below requires to load the whole data file and then requires to filter a subset
 
 ```shell
 fulldata <- read.table("<path-your-data>/household_power_consumption.txt", sep=";")
 data     <- fulldata[fulldata$Date >= "01/02/2007" & fulldata$Date <= "02/02/2007", ]
 ```
 
-a better way to subset a large data file if you can is to filter the data right from the command line.
+a better way to subset a large data file (if you can) is to filter the data right from the command line.
 
 ```shell
 $ head -n1 household_power_consumption.txt  > subset_household_power_consumption.txt 
@@ -203,6 +203,9 @@ df$Date <- as.Date(df$Date, format="%d/%m/%Y")
 df <- transform(df, timestamp=as.POSIXct(paste(Date, Time)), "%d/%m/%Y %H:%M:%S")
 ```
 
+
+The whole setup to collect and clean the data is store in this script [`getData.R`](./getData.R)
+
 > 
 > 
 > ## Making Plots
@@ -245,7 +248,7 @@ df <- transform(df, timestamp=as.POSIXct(paste(Date, Time)), "%d/%m/%Y %H:%M:%S"
 > ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
 
 * [plot1.R](plot1.R)
-* [plot1.png](plot1.R)
+* [plot1.png](plot1.png)
 
 > 
 > 
@@ -255,7 +258,7 @@ df <- transform(df, timestamp=as.POSIXct(paste(Date, Time)), "%d/%m/%Y %H:%M:%S"
 
 
 * [plot2.R](plot2.R)
-* [plot2.png](plot2.R)
+* [plot2.png](plot2.png)
 
 > 
 > 
@@ -264,7 +267,7 @@ df <- transform(df, timestamp=as.POSIXct(paste(Date, Time)), "%d/%m/%Y %H:%M:%S"
 > ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
 
 * [plot3.R](plot3.R)
-* [plot3.png](plot3.R)
+* [plot3.png](plot3.png)
 
 > 
 > 
@@ -273,6 +276,6 @@ df <- transform(df, timestamp=as.POSIXct(paste(Date, Time)), "%d/%m/%Y %H:%M:%S"
 > ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
 
 * [plot4.R](plot4.R)
-* [plot4.png](plot4.R)
+* [plot4.png](plot4.png)
 
 
