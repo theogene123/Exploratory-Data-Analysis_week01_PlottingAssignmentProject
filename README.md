@@ -17,7 +17,26 @@ This assignment is the first project assignment for the course on COURSERA named
 > 
 > 
 > * <b>Dataset</b>: <a href="https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip">Electric power consumption</a> [20Mb]
-> 
+
+```R
+### DOWNLOAD THE DATASET (if not there already)
+mainDir = getwd()
+rawDir = "data"
+dir.create(file.path(mainDir, rawDir))
+setwd(file.path(mainDir, rawDir))
+
+destfile <- file.path(getwd(), "household_power_consumption.zip")
+if(!file.exists(destfile)){
+        url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/00235/household_power_consumption.zip"
+        res <- tryCatch(download.file(url, destfile),
+                        error=function(e) 1)
+}
+unzip("household_power_consumption.zip", exdir = "./")
+setwd(file.path(mainDir))
+dataDir <- file.path(mainDir,rawDir)
+```
+
+ 
 > * <b>Description</b>: Measurements of electric power consumption in
 > one household with a one-minute sampling rate over a period of almost
 > 4 years. Different electrical quantities and some sub-metering values
@@ -106,7 +125,7 @@ fulldata <- read.table("<path-your-data>/household_power_consumption.txt", sep="
 data     <- fulldata[fulldata$Date >= "01/02/2007" & fulldata$Date <= "02/02/2007", ]
 ```
 
-You can subset the data right from the command line
+a better way to subset a large data file if you can is to filter the data right from the command line.
 
 ```shell
 $ head -n1 household_power_consumption.txt  > subset_household_power_consumption.txt 
@@ -147,6 +166,43 @@ $
 > functions.
 > 
 > * Note that in this dataset missing values are coded as `?`.
+
+No missing values in the data subset, as we didn't find any `?`
+
+```shell
+$ grep "?" subset_household_power_consumption.txt 
+$
+```
+
+What you obtain from loading the smaller data file
+
+```R
+> pathCode = "/home/patechoc/Documents/COURSE/MOOCs/COURSERA_Datascienc-with-R/course04_Exploratory_Analysis/CODE/Exploratory-Data-AnalysisExData_week01_PlottingAssignmentProject/"
+> pathData = paste0(pathCode, "/../data/")
+> setwd(pathData)
+> data <- read.table(paste0(pathData, "subset_household_power_consumption.txt", collapse = NULL), sep=";")
+> class(data)
+[1] "data.frame"
+> dim(data)
+[1] 2881    9
+> head(data)
+        V1       V2                  V3                    V4      V5               V6             V7             V8             V9
+1     Date     Time Global_active_power Global_reactive_power Voltage Global_intensity Sub_metering_1 Sub_metering_2 Sub_metering_3
+2 1/2/2007 00:00:00               0.326                 0.128 243.150            1.400          0.000          0.000          0.000
+3 1/2/2007 00:01:00               0.326                 0.130 243.320            1.400          0.000          0.000          0.000
+4 1/2/2007 00:02:00               0.324                 0.132 243.510            1.400          0.000          0.000          0.000
+5 1/2/2007 00:03:00               0.324                 0.134 243.900            1.400          0.000          0.000          0.000
+6 1/2/2007 00:04:00               0.322                 0.130 243.160            1.400          0.000          0.000          0.000
+```
+
+Converting Date/Time variables to Date/Time classes in R
+
+```R
+#### Converting Date & Date+Time variables to Date and Date/Time classes in R
+df$Date <- as.Date(df$Date, format="%d/%m/%Y")
+df <- transform(df, timestamp=as.POSIXct(paste(Date, Time)), "%d/%m/%Y %H:%M:%S")
+```
+
 > 
 > 
 > ## Making Plots
@@ -187,20 +243,36 @@ $
 > 
 > 
 > ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
+
+* [plot1.R](plot1.R)
+* [plot1.png](plot1.R)
+
 > 
 > 
 > ### Plot 2
 > 
 > ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
+
+
+* [plot2.R](plot2.R)
+* [plot2.png](plot2.R)
+
 > 
 > 
 > ### Plot 3
 > 
 > ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+
+* [plot3.R](plot3.R)
+* [plot3.png](plot3.R)
+
 > 
 > 
 > ### Plot 4
 > 
 > ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+
+* [plot4.R](plot4.R)
+* [plot4.png](plot4.R)
 
 
